@@ -15,7 +15,8 @@ class BioData {
     }
 
     public void displayPersonalInfo() {
-        System.out.println("\n =============================================== Personal Information ===============================================");
+        System.out.println(
+                "\n =============================================== Personal Information ===============================================");
         System.out.println("Name: " + name);
         System.out.println("Date of Birth: " + dob);
         System.out.println("Address: " + address);
@@ -26,16 +27,17 @@ class BioData {
 }
 
 // Subclass: Education
-class Education extends BioData {
+class Education {
     String[][] qualifications;
 
-    public Education(String name, String dob, String address, String contact, String email, String[][] qualifications) {
-        super(name, dob, address, contact, email);
+    public Education(String[][] qualifications) {
+
         this.qualifications = qualifications;
     }
 
     public void displayEducation() {
-        System.out.println("\n=============================================== Educational Qualifications ===============================================");
+        System.out.println(
+                "\n=============================================== Educational Qualifications ===============================================");
         for (String[] qualification : qualifications) {
             System.out.println("Level: " + qualification[0]);
             System.out.println("Institution: " + qualification[1]);
@@ -47,16 +49,17 @@ class Education extends BioData {
 }
 
 // Subclass: Skills
-class Skills extends BioData {
+class Skills {
     String[] technicalSkills;
 
-    public Skills(String name, String dob, String address, String contact, String email, String[] technicalSkills) {
-        super(name, dob, address, contact, email);
+    public Skills(String[] technicalSkills) {
+
         this.technicalSkills = technicalSkills;
     }
 
     public void displaySkills() {
-        System.out.println("\n=============================================== Technical Skills ===============================================");
+        System.out.println(
+                "\n=============================================== Technical Skills ===============================================");
         for (String skill : technicalSkills) {
             System.out.println("- " + skill);
         }
@@ -65,16 +68,17 @@ class Skills extends BioData {
 }
 
 // Subclass: Projects
-class Projects extends BioData {
+class Projects {
     String[][] projects;
 
-    public Projects(String name, String dob, String address, String contact, String email, String[][] projects) {
-        super(name, dob, address, contact, email);
+    public Projects(String[][] projects) {
+
         this.projects = projects;
     }
 
     public void displayProjects() {
-        System.out.println("\n=============================================== Projects ===============================================");
+        System.out.println(
+                "\n=============================================== Projects ===============================================");
         for (String[] project : projects) {
             System.out.println("Title: " + project[0]);
             System.out.println("Technologies: " + project[1]);
@@ -84,17 +88,18 @@ class Projects extends BioData {
     }
 }
 
-class Parents extends BioData {
+class Parents {
 
     String[][] Details;
 
-    public Parents(String name, String dob, String address, String contact, String email, String[][] Details) {
-        super(name, dob, address, contact, email);
+    public Parents(String[][] Details) {
+
         this.Details = Details;
     }
 
     public void displayParentsDetails() {
-        System.out.println("\n=============================================== Display Parents Details ===============================================");
+        System.out.println(
+                "\n=============================================== Display Parents Details ===============================================");
         for (String[] Detail : Details) {
             System.out.println(Detail[0] + "Name : " + Detail[1]);
             System.out.println(Detail[0] + "Occupation : " + Detail[2]);
@@ -139,16 +144,17 @@ public class Assignment1 {
         };
         // Parents
         String[][] Details = { { "Mother", "Sujata Sandeep Kanase", "12th Pass", "House Wife" },
-                { "Father", "Sandeep Tukaram Kanase", "12th Pass","Farmer" } };
+                { "Father", "Sandeep Tukaram Kanase", "12th Pass", "Farmer" } };
 
         // Objects
-        Education education = new Education(name, dob, address, contact, email, qualifications);
-        Skills skills = new Skills(name, dob, address, contact, email, technicalSkills);
-        Projects project = new Projects(name, dob, address, contact, email, projects);
-        Parents parents = new Parents(name, dob, address, contact, email, Details);
+        Education education = new Education(qualifications);
+        Skills skills = new Skills(technicalSkills);
+        Projects project = new Projects(projects);
+        Parents parents = new Parents(Details);
+        BioData bioData = new BioData(name, dob, address, contact, email);
 
         // Display BioData
-        education.displayPersonalInfo();
+        bioData.displayPersonalInfo();
         education.displayEducation();
         skills.displaySkills();
         project.displayProjects();
