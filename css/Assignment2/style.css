@@ -1,0 +1,33 @@
+*{
+    margin: 0;
+    padding: 0;
+    background: #e8e6e6;
+}
+
+.main-container{
+    display: grid;
+    grid-template-columns: auto auto auto auto ;
+    margin: 10px;
+    padding: 10px;
+}
+
+.item-container{
+    margin: 10px;
+    border: 1px solid white;
+    padding: 10px;
+    background: white;
+
+    img{
+        height: 230px;
+        width: 230px;
+    }
+
+    h3{
+        background: white;
+        margin-bottom: 8px;
+    }
+    span{
+        background: white;
+    }
+
+}
