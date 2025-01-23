@@ -1,20 +1,17 @@
-* {
-  margin: 0;
-  padding: 0;
-  background: #c5c0c0;
-}
+@charset "UTF-8";
 
-h3 {
-  padding-left: 20px;
+*{
+	margin:0;
+	padding:0;
+	
 }
-
 nav {
   div {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: gray;
-    padding: 5px;
+    background-color: white;
+
   }
   ul {
     display: flex;
@@ -37,3 +34,12 @@ nav {
 #monitor {
   color: green;
 }
+
+h3 {
+  padding-left: 20px;
+}
+
+.atag{
+   text-decoration: none;
+   color: inherit;
+ }

@@ -1,12 +1,19 @@
 package demo;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.Statement;
 
 /**
  * Servlet implementation class display
@@ -14,6 +21,7 @@ import java.io.PrintWriter;
 @WebServlet("/display")
 public class Display extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -27,11 +35,103 @@ public class Display extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		// TODO Auto-generated method stub
 		// response.getWriter().append("Served at: ").append(request.getContextPath());
-		response.setContentType("show/html");
-		PrintWriter pw = response.getWriter();
-		pw.close();
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+		
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/first" , "root" , "pokemon");
+			PreparedStatement ps = con.prepareStatement("select * from student");
+			
+			out.print("""
+					<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Insert title here</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+  </head>
+  <body>
+  <div class="container">
+     <nav>
+      <div>
+        <h3><a href="main.html" class="atag">Tanmay Kanase</a></h3>
+        <div>
+          <ul>
+            <li><button type="button" class="btn btn-primary"> <a href="add.html" class="atag">Add Data</a></button></li>
+            <li><button type="button" class="btn btn-secondary">
+              <a href="update" class="atag">Update Data</a>
+            </button></li>
+            <li><button type="button" class="btn btn-danger"> <a href="delete.html" class="atag">Delete Data</a></button></li>
+            <li><button type="button" class="btn btn-success"> <a href="display" class="atag">Show Data</a></button></li>
+         
+          </ul>
+        </div>
+      </div>
+    </nav>
+    </div>
+    <div class="container">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Roll No</th>
+            <th scope="col">Name</th>
+            <th scope="col">Age</th>
+            <!-- <th scope="col">Gender</th> -->
+            <th scope="col">Marks</th>
+            <th scope="col">Result</th>
+          </tr>
+        </thead>
+        <tbody>
+					""");
+
+			
+			ResultSet rs = ps.executeQuery();
+			ResultSetMetaData rsmd = rs.getMetaData();
+			
+			int totalColumn = rsmd.getColumnCount();
+			
+			// Table Header
+//            out.print("<tr>");
+//            for (int i = 1; i <= totalColumn; i++) {
+//                out.print("<th>" + rsmd.getColumnName(i) + "</th>");
+//            }
+//            out.print("</tr>");
+
+            // Table Data
+            while (rs.next()) {
+                // Assuming newtable has two columns: rollNo and name
+                out.print("<tr><td>"  + rs.getString(2) + "</td><td>" + rs.getString(3) + "</td><td>" + rs.getString(4) + "</td><td>" + rs.getString(5) + "</td><td>" + rs.getString(6) + "</td></tr>");
+            }
+            out.print("""
+            		</tbody>
+      </table>
+    </div>
+  </body>
+</html>
+            		""");
+
+			
+			
+			
+			
+		}catch(SQLException e) {
+			out.print("<p style='color:red;'>Error: " + e.getMessage() + "</p>");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	
 	}
 
 	/**
