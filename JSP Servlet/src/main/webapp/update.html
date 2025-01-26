@@ -11,6 +11,33 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
+  <script>
+        // Function to get query parameters from the URL
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param); // Retrieve the parameter value
+        }
+
+        // Set the rollNo value in the input field
+        function setRollNoField() {
+            // const rollNo = getQueryParam("rollNo"); // Get 'rollNo' from the URL
+            // const name = getQueryParam("name");
+            // const age = getQueryParam("age");
+           // const marks = getQueryParam("marks");
+            
+           
+            document.getElementById("rollNo").value = getQueryParam("rollNo"); // Set the value
+            document.getElementById("name").value = getQueryParam("name");
+            document.getElementById("age").value = getQueryParam("age");
+            document.getElementById("marks").value = getQueryParam("marks");
+            
+            
+        }
+
+        // Run the function on page load
+        window.onload = setRollNoField;
+    </script>
+  
   <div class="container">
      <nav>
       <div>
@@ -30,13 +57,13 @@
     </nav>
     </div>
     <div class="container">
-      <form action="add" method="post">
+      <form action="update" method="post">
         <div class="row mb-3">
           <label for="inputEmail3" class="col-sm-2 col-form-label"
             >Roll No</label
           >
           <div class="col-sm-10">
-            <input type="number" class="form-control" id="rollNo" name="rollNo" />
+            <input type="number"  class="form-control" id="rollNo" name="rollNo" />
           </div>
         </div>
         <div class="row mb-3">

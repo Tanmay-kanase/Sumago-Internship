@@ -117,7 +117,7 @@ public class Update extends HttpServlet {
             while (rs.next()) {
                 // Assuming newtable has two columns: rollNo and name
                 out.print("<tr><td>"  + rs.getString(2) + "</td><td>" + rs.getString(3) + "</td><td>" + rs.getString(4) + "</td><td>" + rs.getString(5) + "</td><td>" + rs.getString(6) +"</td><td>"+"<button type=\"button\" class=\"btn btn-secondary\">\r\n"
-                		+ "              <a href=\"update\" class=\"atag\">Update Data</a>\r\n"
+                		+ "              <a href=\"update.html?rollNo=" + rs.getString(2)+"&name="+rs.getString(3)+"&age="+rs.getString(4)+"&marks="+rs.getString(5)+"\" class=\"atag\">Update Data</a>\r\n"
                 		+ "            </button>"+"</td></tr>");
             }
             out.print("""
@@ -148,7 +148,47 @@ public class Update extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		String name = request.getParameter("name");
+        String rollNo = request.getParameter("rollNo");
+        String age = request.getParameter("age");
+        String marks= request.getParameter("marks");
+        PrintWriter out = response.getWriter();
+        
+        
+        try {
+            // Load JDBC driver
+            Class.forName("com.mysql.jdbc.Driver");
+
+            // Connect to the database
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/first?useSSL=false", "root", "pokemon");
+
+            // SQL Insert query
+            String query = "UPDATE student set name = ? , age = ? , marks = ? where rollNo = ?";
+            PreparedStatement statement = conn.prepareStatement(query);
+
+            // Set parameters
+            statement.setString(1, name);
+            statement.setString(2, age);
+            statement.setString(3, marks);
+            statement.setString(4, rollNo);
+           // RequestDispatcher dispatcher = null;
+            // Execute update
+            int rowsInserted = statement.executeUpdate();
+            if (rowsInserted > 0) {
+                out.println("<p>Data updated successfull</p>");
+                out.println("<a href='main.html'>Back to home.</a>" );
+            } else {
+                out.println("<p>Error: Unable to update data.</p>");
+            }
+//            dispatcher.forward(request, response);
+        } catch (ClassNotFoundException e) {
+           out.println("<p>Error: Unable to load database driver</p>");
+            e.printStackTrace();
+        }catch (SQLException e) {
+            out.println("<p>Error: Database error occurred</p>");
+            out.println(e.getMessage());
+            e.printStackTrace();
+        } 
 	}
 
 }
