@@ -18,7 +18,7 @@ import java.sql.Statement;
 /**
  * Servlet implementation class display
  */
-@WebServlet("/update")
+@WebServlet("/Update")
 public class Update extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -74,10 +74,10 @@ public class Update extends HttpServlet {
           <ul>
             <li><button type="button" class="btn btn-primary"> <a href="add.html" class="atag">Add Data</a></button></li>
             <li><button type="button" class="btn btn-secondary">
-              <a href="update" class="atag">Update Data</a>
+              <a href="Update" class="atag">Update Data</a>
             </button></li>
             <li><button type="button" class="btn btn-danger"> <a href="delete.html" class="atag">Delete Data</a></button></li>
-            <li><button type="button" class="btn btn-success"> <a href="display" class="atag">Show Data</a></button></li>
+            <li><button type="button" class="btn btn-success"> <a href="Display" class="atag">Show Data</a></button></li>
          
           </ul>
         </div>
@@ -117,7 +117,7 @@ public class Update extends HttpServlet {
             while (rs.next()) {
                 // Assuming newtable has two columns: rollNo and name
                 out.print("<tr><td>"  + rs.getString(2) + "</td><td>" + rs.getString(3) + "</td><td>" + rs.getString(4) + "</td><td>" + rs.getString(5) + "</td><td>" + rs.getString(6) +"</td><td>"+"<button type=\"button\" class=\"btn btn-secondary\">\r\n"
-                		+ "              <a href=\"update.html?rollNo=" + rs.getString(2)+"&name="+rs.getString(3)+"&age="+rs.getString(4)+"&marks="+rs.getString(5)+"\" class=\"atag\">Update Data</a>\r\n"
+                		+ "              <a href=\"update.html?rollNo=" + rs.getString(2)+"&name="+rs.getString(3)+"&age="+rs.getString(4)+"&marks="+rs.getString(5)+"&id="+rs.getString(1)+"\" class=\"atag\">Update Data</a>\r\n"
                 		+ "            </button>"+"</td></tr>");
             }
             out.print("""
@@ -152,6 +152,8 @@ public class Update extends HttpServlet {
         String rollNo = request.getParameter("rollNo");
         String age = request.getParameter("age");
         String marks= request.getParameter("marks");
+        String id = request.getParameter("id");
+      
         PrintWriter out = response.getWriter();
         
         
@@ -163,7 +165,7 @@ public class Update extends HttpServlet {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/first?useSSL=false", "root", "pokemon");
 
             // SQL Insert query
-            String query = "UPDATE student set name = ? , age = ? , marks = ? where rollNo = ?";
+            String query = "UPDATE student set name = ? , age = ? , marks = ? , rollNo = ? where id = ?";
             PreparedStatement statement = conn.prepareStatement(query);
 
             // Set parameters
@@ -171,6 +173,7 @@ public class Update extends HttpServlet {
             statement.setString(2, age);
             statement.setString(3, marks);
             statement.setString(4, rollNo);
+            statement.setString(5, id);
            // RequestDispatcher dispatcher = null;
             // Execute update
             int rowsInserted = statement.executeUpdate();
@@ -178,6 +181,8 @@ public class Update extends HttpServlet {
                 out.println("<p>Data updated successfull</p>");
                 out.println("<a href='main.html'>Back to home.</a>" );
             } else {
+            	out.print(statement);
+            	out.print(rowsInserted);
                 out.println("<p>Error: Unable to update data.</p>");
             }
 //            dispatcher.forward(request, response);

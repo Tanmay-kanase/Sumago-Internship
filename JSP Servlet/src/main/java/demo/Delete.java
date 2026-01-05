@@ -18,7 +18,7 @@ import java.sql.Statement;
 /**
  * Servlet implementation class display
  */
-@WebServlet("/delete")
+@WebServlet("/Delete")
 public class Delete extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -74,10 +74,10 @@ public class Delete extends HttpServlet {
           <ul>
             <li><button type="button" class="btn btn-primary"> <a href="add.html" class="atag">Add Data</a></button></li>
             <li><button type="button" class="btn btn-secondary">
-              <a href="update" class="atag">Update Data</a>
+              <a href="Update" class="atag">Update Data</a>
             </button></li>
             <li><button type="button" class="btn btn-danger"> <a href="delete.html" class="atag">Delete Data</a></button></li>
-            <li><button type="button" class="btn btn-success"> <a href="display" class="atag">Show Data</a></button></li>
+            <li><button type="button" class="btn btn-success"> <a href="Display" class="atag">Show Data</a></button></li>
          
           </ul>
         </div>
@@ -155,17 +155,18 @@ public class Delete extends HttpServlet {
         
         try {
             // Load JDBC driver
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
 
             // Connect to the database
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/first?useSSL=false", "root", "pokemon");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/first", "root", "pokemon");
 
             // SQL Insert query
-            String query = "Delete FROM student where rollNo = ?";
+            String query = "DELETE FROM student where rollNo = ?";
             PreparedStatement statement = conn.prepareStatement(query);
 
             // Set parameters
             statement.setString(1, rollNo);
+           
            // RequestDispatcher dispatcher = null;
             // Execute update
             int rowsInserted = statement.executeUpdate();
@@ -173,7 +174,9 @@ public class Delete extends HttpServlet {
                 out.println("<p>Data deleted successfull</p>");
                 out.println("<a href='main.html'>Back to home.</a>" );
             } else {
-                out.println("<p>Error: Unable to delete data.</p>");
+            	out.print(rowsInserted);
+            	out.print(statement);
+                out.print("<p>Error: Unable to delete data.</p>");
             }
 //            dispatcher.forward(request, response);
         } catch (ClassNotFoundException e) {

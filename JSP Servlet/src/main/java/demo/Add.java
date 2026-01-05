@@ -18,7 +18,7 @@ import java.sql.SQLException;
 /**
  * Servlet implementation class JDBC
  */
-@WebServlet("/add")
+@WebServlet("/Add")
 public class Add extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String DB_URL = "jdbc:mysql://localhost:3306/first";

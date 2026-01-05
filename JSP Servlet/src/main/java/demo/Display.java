@@ -68,10 +68,10 @@ public class Display extends HttpServlet {
           <ul>
             <li><button type="button" class="btn btn-primary"> <a href="add.html" class="atag">Add Data</a></button></li>
             <li><button type="button" class="btn btn-secondary">
-              <a href="update" class="atag">Update Data</a>
+              <a href="Update" class="atag">Update Data</a>
             </button></li>
             <li><button type="button" class="btn btn-danger"> <a href="delete.html" class="atag">Delete Data</a></button></li>
-            <li><button type="button" class="btn btn-success"> <a href="display" class="atag">Show Data</a></button></li>
+            <li><button type="button" class="btn btn-success"> <a href="Display" class="atag">Show Data</a></button></li>
          
           </ul>
         </div>
